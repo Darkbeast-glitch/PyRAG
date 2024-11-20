@@ -24,17 +24,34 @@ A smart assistant that helps you discover and learn about Python conferences wor
 1. Clone the repository
 2. Install dependencies:
 ```sh
-pip install -r [requirements.txt]
+pip install -r requirements.txt
 
 Create a .env file with your API keys:
 GOOGLE_API_KEY=your_key_here
 
 python pyconf_rag.py
 
-Structure
-pyconf_rag.py - Main conference scraper and RAG implementation
-data - Persistent storage for vector embeddings and documents
-.env - Environment variables and API keys
-requirements.txt - Project dependencies
-License
-MIT ```
+ ```
+
+## Project Structure
+
+```
+/C:/Users/Julius Boakye/Desktop/Devs/RAGs/
+├── pyconf_rag.py          # Main conference scraper and RAG implementation
+├── data/                  # Persistent storage for vector embeddings and documents
+├── .env                   # Environment variables and API keys
+├── requirements.txt       # Project dependencies
+```
+
+
+## Contribution
+
+We welcome contributions from the community! To contribute:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bugfix.
+3. Make your changes and commit them with clear messages.
+4. Push your changes to your fork.
+5. Open a pull request with a detailed description of your changes.
+
+MIT
