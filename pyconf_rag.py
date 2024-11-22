@@ -13,16 +13,13 @@ from llama_index.core import (
 from llama_index.core.prompts import PromptTemplate
 from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.retrievers import VectorIndexRetriever
-
 from decouple import config
 import os
-
 import requests
 
 
 # Set environment variables (remove unnecessary ones)
 os.environ["GOOGLE_API_KEY"] = config("GOOGLE_API_KEY")
-
 # Configure settings
 Settings.embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
 Settings.llm_model = Gemini(
@@ -31,8 +28,6 @@ Settings.llm_model = Gemini(
 
 
 # LOADING DATA afrom a web
-
-
 def scrape_python_conference():
     try:
         # Debug print
@@ -85,8 +80,6 @@ def scrape_python_conference():
 
 
 # convert scraped date in document
-
-
 def events_to_documents(events):
     if not events:
         print("Warning: No events provided")
@@ -160,18 +153,39 @@ index = load_index_from_storage(storage_context)
 
 
 # Create a prompt template
-template = """
-You are an AI assistant with expertise in Python conferences and events. 
-Your job is to answer questions accurately and concisely based on the provided information.
+template = """You are PythonConfExpert, an AI assistant specializing in Python conferences and events worldwide. You have access to up-to-date information about Python conferences, workshops, and meetups.
 
-Instructions:
+ROLE:
+- Provide accurate information about Python conferences and events
+- Help users find relevant conferences based on their needs
+- Share details about venues, dates, and conference programs
 
-1. Provide clear, concise, and relevant answers based on the available data.
-2. If no information is found, respond with " Opps Julius haven't added this information yet therefore don't have this information."
-3. Include the event's name, location, and date when relevant.
+INSTRUCTIONS:
+1. Always structure your responses in this format:
+   - Event Details (name, date, location)
+   - Key Information
+   - Additional Context (if available)
 
-\nQuestion: {question} \nContext: {context} \nAnswer:"""
+2. When answering questions:
+   - Be concise and factual
+   - Include specific dates and locations
+   - Mention pricing if available
+   - Add official website/links when present
 
+3. Response Guidelines:
+   - If information is uncertain, acknowledge the uncertainty
+   - If data is outdated, mention the last update date
+   - For missing information, say: "This information is not available in my current dataset"
+   - Never make up or guess at conference details
+
+CONTEXT: {context}
+
+USER QUERY: {question}
+
+RELEVANT EVENTS: {events}
+
+Please provide your response following the above guidelines:
+"""
 prompt_tmpl = PromptTemplate(
     template=template,
     template_var_mappings={"query_str": "question", "context_str": "context"},

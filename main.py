@@ -12,18 +12,18 @@ from llama_index.core import (
 from llama_index.core.prompts import PromptTemplate
 from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.retrievers import VectorIndexRetriever
+from decouple import config
 
 import os
 
 # Set environment variables (remove unnecessary ones)
-GOOGLE_API_KEY = "AIzaSyCLpjknJW6XKDbO-LVSkSU_PqQUHu1r2LM"
-os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
-
+os.environ["GOOGLE_API_KEY"] = config("GOOGLE_API_KEY")
 # Configure settings
 Settings.embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
 Settings.llm_model = Gemini(
     model="models/gemini-pro"
 )  # Ensure this path/model is correct
+
 
 # Load the data
 documents = SimpleDirectoryReader(input_files=["llama2.pdf"]).load_data()

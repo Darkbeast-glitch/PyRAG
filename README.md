@@ -36,7 +36,7 @@ python pyconf_rag.py
 ## Project Structure
 
 ```
-/C:/Users/Julius Boakye/Desktop/Devs/RAGs/
+
 ├── pyconf_rag.py          # Main conference scraper and RAG implementation
 ├── data/                  # Persistent storage for vector embeddings and documents
 ├── .env                   # Environment variables and API keys
